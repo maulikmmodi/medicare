@@ -1,0 +1,1376 @@
+{
+  "paragraphs": [
+    {
+      "title": "",
+      "text": "%pyspark\nprint(\"%html \u003cH1\u003eQuestion 1\u003c/H1\u003e\")\nprint(\"%html \u003cH3\u003eWhat is the total number of medications prescribed in each state?\u003c/H3\u003e\")",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:29:12 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cH1\u003eQuestion 1\u003c/H1\u003e\n"
+          },
+          {
+            "type": "HTML",
+            "data": "\u003cH3\u003eWhat is the total number of medications prescribed in each state?\u003c/H3\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525951674323_1941130805",
+      "id": "20180510-072754_1424866431",
+      "dateCreated": "May 10, 2018 7:27:54 AM",
+      "dateStarted": "May 10, 2018 7:29:04 AM",
+      "dateFinished": "May 10, 2018 7:29:04 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nimport pyspark\nfrom pyspark.sql import SQLContext\nsqlContext \u003d SQLContext(spark)\n\nprescriber_data \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Project/Data/Part D_Prescriber/Part_D_All/PartD_Combined.csv\", header\u003d\"True\")\n",
+      "user": "anonymous",
+      "dateUpdated": "May 18, 2019 12:25:01 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": [],
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525951749280_-873399344",
+      "id": "20180510-072909_470118055",
+      "dateCreated": "May 10, 2018 7:29:09 AM",
+      "dateStarted": "May 10, 2018 7:39:44 AM",
+      "dateFinished": "May 10, 2018 7:39:44 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nprescriber_data \u003d prescriber_data.withColumn(\"total_claim_count\",prescriber_data[\"total_claim_count\"].cast(\u0027float\u0027))",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:39:47 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525952056412_731411865",
+      "id": "20180510-073416_1809603551",
+      "dateCreated": "May 10, 2018 7:34:16 AM",
+      "dateStarted": "May 10, 2018 7:39:47 AM",
+      "dateFinished": "May 10, 2018 7:39:47 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nprescriber_data.registerTempTable(\u0027prescriberDataTable\u0027)\noutput \u003d sqlContext.sql(\u0027select nppes_provider_state AS State, ROUND(SUM(total_claim_count) / 1e6) AS total_claim_count_millions from prescriberDataTable group By(State) order by total_claim_count_millions DESC \u0027)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:39:51 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525952083727_574080213",
+      "id": "20180510-073443_375521253",
+      "dateCreated": "May 10, 2018 7:34:43 AM",
+      "dateStarted": "May 10, 2018 7:39:51 AM",
+      "dateFinished": "May 10, 2018 7:39:51 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nfrom matplotlib import pyplot as plt\npdf1 \u003d output.toPandas()",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:39:53 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525952099035_2078295171",
+      "id": "20180510-073459_279105333",
+      "dateCreated": "May 10, 2018 7:34:59 AM",
+      "dateStarted": "May 10, 2018 7:39:53 AM",
+      "dateFinished": "May 10, 2018 7:40:16 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nax \u003d pdf1.head(20).plot(kind\u003d\u0027bar\u0027,x\u003d\u0027State\u0027,y\u003d\u0027total_claim_count_millions\u0027, color\u003d\u0027blue\u0027)\n#ax.set_xticks(pdf1.State)\nax.set_xticklabels(pdf1.State, rotation\u003d45)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:40:20 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "[Text(0,0,\u0027CA\u0027), Text(1,0,\u0027FL\u0027), Text(2,0,\u0027NY\u0027), Text(3,0,\u0027TX\u0027), Text(4,0,\u0027PA\u0027), Text(5,0,\u0027OH\u0027), Text(6,0,\u0027NC\u0027), Text(7,0,\u0027IL\u0027), Text(8,0,\u0027MI\u0027), Text(9,0,\u0027GA\u0027), Text(10,0,\u0027TN\u0027), Text(11,0,\u0027MO\u0027), Text(12,0,\u0027NJ\u0027), Text(13,0,\u0027IN\u0027), Text(14,0,\u0027KY\u0027), Text(15,0,\u0027AL\u0027), Text(16,0,\u0027MA\u0027), Text(17,0,\u0027VA\u0027), Text(18,0,\u0027PR\u0027), Text(19,0,\u0027LA\u0027)]\n"
+          },
+          {
+            "type": "HTML",
+            "data": "\u003cdiv style\u003d\u0027width:auto;height:auto\u0027\u003e\u003cimg src\u003ddata:image/png;base64,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42Z26nh7Nr/dPs3M815fLLyqB6tA7dq11a1bNy1atEgBAQFyuVzy9fXVXXfdpdWrV0s61WOVmprqeU5aWpoaNmx4RlsxMTFyu91yu93y8/M7b68BACqSb775RoMGDVLlypXVoEEDde3aVWvWrDljvpMnT2rEiBEKDQ3VgAEDinxt1BdffKF77rlHPj6nbt9Yt27dM+aZPXu22rVrp7Zt2+rHH388a9uXXHKJbrjhBklSaGiounbtqipVqig0NFQpKSnFWv7WrVvVtGlTtWjRQpI0ZMgQff3113/4Wm666Sb5+vqqfv368vf31+7du//wOQU6dOiggIAA+fr66sorr9T111/veS2/V/+5fPPNN+rXr5+qV6+uGjVq6JZbbtHy5cslyfMFMUlq3769p/2wsDDdcccdev/99z3rA2fymoCVmZnpuWDv2LFj+uKLL9SqVSvPdVVmpvnz53suouzTp4+mT58uM9OqVatUq1YtBQQElGjZTl84CgAVjZkVab6XX35ZDRo00IYNG+R2u3XixIkit/9719Xu2LFDL774opYsWaLvv/9eN91001nvxVSlShVPO5UqVZKvr6/n37m5ucVa/u+9Zh8fH+Xn50vSGXUULFOSKleu/LvL/a3Tn1uc+s/l917DuepcuHCh7rvvPq1du1bt27cv0XIvBl4TsDIyMtS9e3eFhYWpQ4cOioqKUu/evXXHHXcoNDRUoaGhysrK0pNPPinp1DcomjVrpqCgII0YMcKxiwsB4GJRs2ZNHTp0SJLUpUsXffTRR8rLy1NmZqa+/vprdezYsdA8knTgwAEFBASoUqVKmjFjhvLy8oq0rOuvv15vvPGG52C+b9++Qo8fPHhQ1atXV61atbR7924lJCQ49CrPvfxWrVopJSVFP/30kyRpxowZ6tq1q6RT1zitXbtWkvTxxx//Yfu/XU/nS5cuXTR//nwdPXpUR44c0bx58/TnP//5nPPn5+crNTVV3bt31/PPP6/s7GwdPnz4PFZccXhN315YWJjWr19/xvQvv/zyrPO7XC699tprZV0WAJwXRexAclS9evV0zTXXKCQkRDfeeKPCwsIUHh4ul8ul559/Xn/6059Ur149+fj4KDw8XEOHDtW9996r/v37a86cOerevbuqV69epGXdfffd2rZtm8LCwlSlShWNGDFC999/v+fx8PBwtW3bVsHB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IWvp0qV66623VKdOHX3++efauHGjOnbsqMqVK6tSpUol2iYXLlyonj176uOPP1aNGjW0bds2DRo0SBkZGdq5c6e2bdumtm3blvoA/fPPP2vo0KF6++23deedd6pfv35q166dPv74Y61YsUK9evUqdpuff/65Pv/8c+3Zs0d9+/bVZZddpm+//daRkLVt2zZlZGTI399fbdu2VX5+vhITE5WTk6OGDRuW+oCckpKiAQMG6Mcff1RSUpI6deokt9utfv36lXq7rFatmhYsWKC5c+cqOjraE7JcLpdj2/uBAwc0fPhwTZkyRZdcconWrVuntm3bqkqVKiVuc9++ffLz89PKlSvL5FghSQsWLNCECRM0adIkNW3aVNu3b1e1atXUvHnzUh03XC6XateurYyMDB04cEBmpmXLlunLL7/UtddeK5fLJR8fnzI7satoCFgOWLt2rVJTU9W0aVNdccUVev/99/Xss8+qd+/eevPNN/XWW29p7969ql+/vurVq1fsnfju3btVvXp1ValSRbNnz9Yll1yi1q1bO3ImlZKSot27d+vgwYNKSkrSP/7xD23evFlbt27VsGHDSnVmuGjRIv39739X9+7dVa1aNb355ptKTk7WokWLlJ6eLl9fXx09elT169cv9oexYCdR8LwffvhB7733nr766iu53W4tWLBAoaGhpeop++ijj/Taa6/pmmuu0aWXXqpevXpp1KhRuvHGGzVv3jy5XC4FBASU+Ez/yJEjmj59um6//fZC66Dg75Ks97y8PNWpU0fHjh3TCy+8oIiICAUGBio/P9+xQJ6QkKAPPvhAO3bsUIMGDXTLLbfowIEDpQ5ZBa83PDxcGzduVMOGDXX//fdr9uzZSkhI0LZt29SxY0ddcsklxWo3MTFR48ePV6tWrbRmzRrddNNNWrBggeLj4z1DbZs3b9aRI0cUFhZWonVUsG5/+eUXbdiwQWPHjpUkValSRfXr11d4eLgWL16skJAQ1a9fv0htFqyP5s2bKz8/X6tWrVJqaqr+8pe/lDpkmZlSUlLUokULvffeezp69KhSUlJ08803Kzc3Vxs3btSBAwfUuHHjEp9EfPXVV3r55Zf19NNPq0aNGlq3bp2+/vprffTRR4qMjFTLli1LfLJZo0YN+fr6qm/fvvrss880Y8aMM3qy1q9fL5fLpRo1apSofkmqWrWqLr30Um3dulUdO3bUtm3b9Morr8jf318+Pj7F3r/88ssvevzxx3XDDTcoMDBQM2fOdPRYkZ+fr+PHj6tHjx4KCwvT6NGj1bp1a23YsEE7d+7U1VdfrePHj5c4IBYEp+rVq6tSpUoaNWqUhgwZokcffVSffPKJfvjhB/n7++vyyy8vUfte5zz8HI9X++yzzywsLMzeffdd27p1q+Xm5tpjjz1mGzdutO+//94aNWpkH3zwgfXu3dseeugh27dvX7HaX7BggXXo0MH27dtn2dnZNnPmTOvVq5d9/PHHheaLj4+3TZs2FavtjIwMe+SRR+zll1/2TEtLS7Off/7Zrr76auvXr59nem5ubrHaXrRokbVo0cLcbrdn2vHjx2327Nl23XXXWWxsrA0YMMA6dOhg999/v+Xk5BSr/ZMnTxb6/4ABA+xf//qXmZlNnjzZqlWrZm3btrWxY8fa4sWLi9V2amqq7d+/39asWWOzZ8+2nj17WosWLeydd97xzPPhhx9a3759bfbs2ZaXl1es9n/55Rc7ePCgmZkNGTLE1q5da2an1nF+fr6ZmW3bts1effXVYrWdmZlpV1xxhe3du9fMzKZMmWJhYWH23XffmZl52lqyZIklJSUVq+bfLmfUqFE2adIk+8tf/mILFiwwM7Pp06dbTEyMxcbGFrvN5cuX29tvv+2pdcGCBTZ69GjPv+vWrWt9+vSxoKAge//994u8PS5atMiCgoI8r3fw4MHWuXNnMzPbtGmTvfTSS9atWzerWrWqdejQwfO+FFfB53r37t3Wo0cPS05OLvT4oUOHrEuXLvbJJ58Uqb0tW7bYo48+aosXL7bjx4+b2anP+EMPPWRTp061kydP2rJly+yhhx6yKVOmFHu/UvD5eeWVV+zKK6+0u+66y5577jnr3LmzPfnkk9a9e3cbMGCAvf7663b48OFitV2wDX/88cf297///YzHP//8c6tZs6ZnXRTMXxSbN282l8tlo0aN8mxnhw8fthEjRljv3r09bU2dOtXatGlju3fvLlbtBU5fn/v27bOxY8fa119/bWZmd955pzVu3Ng6d+5skyZNsv379xe53R9++MF69uxpa9asMTOzRx55xLFjhZl59qM///yzNW7c2J555hkzM7vrrrusadOm1rNnT+vZs6fNnTvXUlJSitTm2d6fvXv3WqdOnezDDz+0X3/91Zo1a2avv/66PfXUUxYcHFzsbcZbEbBKYdmyZXbllVfaqlWrCk1/6aWX7Morr7QmTZpYXFycmZ3aCWRnZxer/YSEBLv22mstPj7ezP5vQ//www/tpptu8oSst956y2rXrm3bt28vVvt5eXk2ffp0e/DBB+2VV16xAwcOFHr8mmuusR49ehSrTTOzxMRE8/f3t/79+9vmzZsLPbZx40Zr06aN5eTkWE5Oju3fv99+/fXXYrW/ePFiu+222+zZZ5+1efPmmdmpH+9+8sknbf78+da0aVNbvny5rVu3zl555RVLTU0tctvz58+3Tp06Wb9+/axz585277332tNPP22hoaH2008/FZp37ty5lp6eXqzad+3aZQ8++KC9+OKLlpuba88884xFREScsUOaMWOG3XnnncXeUcXFxVnLli09O+eCkFWwjb7++usWEBBQ5J1rgQ0bNtiGDRvM7NR28/e//92GDx9uiYmJ1rt3b1u4cKGZmf33v/+1Bx544Ixt6fckJCRYRESETZs2zb788kszOxUwO3fubGPGjLE2bdrYp59+amantv2irvPTt8MffvjBM71fv37WsWNHz+dpz549lpycfMb7W1SJiYnWvn17W7RokZmZ9e/f3yZPnnxGOB49erQnjP6RZcuWmcvlshYtWtiTTz5pt99+u61fv96ef/55mzBhgv33v/+1vLw8W7JkiQ0aNMi+//77Itf72yD+1ltvWXh4uCUnJ9svv/xiixYtsptuuskCAgLsiiuuKPZ+68SJE2Z2alsYPny4mf3fCVrB3/Hx8eZyuYq8Pgr8+uuvdvXVV9vEiRMtKirKBg8ebAsXLrRffvnFHn74YbvjjjssNjbWmjdvbuvWrStW2wUK3s/ExETPtEcffdRGjhxpP/zwg7Vo0cI+/fRTW7lypUVFRdmePXuK1f6ECROsQ4cOduzYMXvttdesWbNm1qRJE882XpJjhdn/7Rf/9a9/2bp16yw9Pd3+9Kc/Wfv27a1fv362d+9e++6772zSpEk2cODAIofPgjBe8HfB52b16tUWGhpq9erV8+yHzaxYgdPbEbBKYdKkSTZ58mQzO7XxnZ70BwwYYA8++KDnseLau3evuVwuz4abnJxsgwcPtgMHDnh6sgYMGGB33nmntWzZ0nPwK4pt27bZli1bzOzUh+XTTz+1+++/3yZPnmyHDh0qNG/Pnj2LFVC++OILa968ub3//vs2adIkGzNmjC1fvtzz+IkTJ6xfv37FavN0CQkJ1qFDB5syZYo9+eSTNnToUFu7dq3t37/funXrZpUqVbIlS5Z45i/Ouv/yyy+tefPm5na7bd++fZ6DfExMjL300kt2880324oVK0pUd4G8vDybMWOGPfTQQ/bmm2+amVlMTIy1a9fOvvrqK9uwYYNNnz7dwsPDbePGjSVaRnx8vDVr1qxQyLrqqqts1KhR1rp162L3XmVlZZnL5bJGjRrZnDlzbPXq1Xby5Em79957bdGiRTZz5ky7+eabbf78+WZmxQpX5zpJ2bdvny1btsyqVatmb731VrHqNTv7drh06VLP4wMGDLD27dsXq/fkXKZMmWK+vr7Ws2dPW758uW3dutXCw8Nt8uTJnuAzffp0a9GiRbFOgpYvX261atWyLVu22L///W979NFH7corr7SuXbtaYGCgvfvuu2Z2KjAW7IeKKi4uzlq0aOHZRiZPnmzh4eG2evVqMzM7cuSIZWVlFftzWhDesrOz7dNPP7Xo6OhCj58eOhMTE884ASuKUaNGWXR0tJ08edLTk9y1a1f74YcfrEOHDlavXr1i7Q9/q+D9jIqKsrlz53rqbtu2rVWtWrVQmChKz/vevXsL7VcLetxWrlxpZqfev3vvvdfMij9SUOD0/eITTzxhd955p6WmptrPP/9sAQEB9tRTT5nZ/4Wjo0ePFqnd34bx0/en+/fvt8GDB3u2vYKeVic+U96CgFUCBRvQ/fffb0888UShaQUfkKefftpuvfXWEn9gzE4NP7Zt29Y2bNhg1113nb300kuexw4ePGjvvvuutWjRwtavX1/kNgsOln5+fjZ16lR7/fXXPQf9p59+2l5++WU7cuRIiWtevXq1J4Rs2bLFnnzySRs7dqx98803nnkGDBhgzz33XLHbLgidBWd6v/76q0VHR3t2gklJSRYVFWU7d+4sUe3PPPOMvfrqq2ZmduzYMTM7NZwXGRlpDzzwgM2aNcu6dOlSaNizqM4Wav/2t795hjleeOEFi4mJseuvv9769OlTrB6Js/ltyHr++eetdu3axdpWTrdkyRJzuVz2j3/8w/71r3/ZoEGD7NFHH7UZM2aYmdk777xj0dHRxe5xe/nll88IB6NHj7Y6derY448/bs8884wnEBZnuPRc2+HpIeuGG26wLl26FKvesykYMn3xxRetT58+tnz5ctu2bZvdcccd9uc//9l69+5tISEhJQrM8fHxFhIS4hm6XLZsmb366qsWGhrq6dmOiooq9uUBBW3/Noi3a9fOMxRWUnFxcRYSEmIffPCBTZw40TPkvm/fPsvNzbXMzExPL1dxFOxjc3JybODAgZaRkWFLly61Jk2a2N13323R0dE2aNCgEoW20xW8ny+99JL169fPPvzwQzMze+ONN+y+++4zs/87of6jMFFw4jd69GjPCYiZ2eOPP24DBw40s1ND4HfffXeJjxXn2i/Onj3bzE7texo2bGiPP/645znFCUGffvppoV7x0zsT3nvvPWvSpIllZmaWqHZvR8AqhSVLlliPHj08B9y8vDzPQeCRRx6x6tWrF7v7+LcSEhLM5XLZs88+a2aFr9M5evRosXoLTq/b5XLZlClTbMSIEXbrrbfa0KFDLSYmxqKjo23q1Kmes5GSKlgP27Zts3/84x82duxY++qrr8zMbN68eSXuwfrss8+sTZs2ntd9xx132BtvvGH5+fm2f/9+i46Otjlz5hRrB1Iw7z333GPjxo3zTCvY4X3//fd23XXX2YYNG+z1118v9pDm74XacePG2X/+8x/Psg4ePFjks8s/Eh8fby1btrSsrCwzsxJd03G6L774who3bmxZWVn2xhtvWJcuXez222+3nJwcO3jwYLG2xbOdpBTUPHjwYFu5cqW1atXKAgMDrWfPniWu+fe2Q7NT1xyWxLmGTAuG1wqC3P79+y05OblUB6CFCxdas2bNPL0IZoUPkCUJKwV+G7Kee+45u/baa+3YsWOl6olITEw0l8tlVatWtdtvv90iIiIsNDTUrrvuOrv55ptLfI1Ofn6+HT9+3J544gkbNGiQtWzZ0tOjtHXr1hJv4783BH7zzTfbwoULLTMz0/z8/DxDwUX1008/2bRp0ywgIMAef/xxW7x4sZ08edJ69Ohhn3zyie3atcs6depU4uvFzM69XyzYr2zevNmaN29uWVlZJXpff7udFPTcbdmyxe67774Sf468HQGrFA4fPmzjxo2zxx57rFCvxvvvv2+9evU640LXklq8eLG1bNnSMy5fmh3q6W22atXKcnJy7Ndff7X33nvPbrjhBqtbt64FBweX6BqAc9m2bZuNHz/e7r///lJdXF0gPj7egoKC7L777rN+/foVCiQf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 style\u003d\u0027width\u003dauto;height:auto\u0027\u003e\u003cdiv\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525952128066_530881067",
+      "id": "20180510-073528_601418343",
+      "dateCreated": "May 10, 2018 7:35:28 AM",
+      "dateStarted": "May 10, 2018 7:40:20 AM",
+      "dateFinished": "May 10, 2018 7:40:22 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nprint(\"%html \u003cH1\u003eQuestion 2\u003c/H1\u003e\")\nprint(\"%html \u003cH3\u003eWhat is the most prescribed medication in each state?\u003c/H3\u003e\")",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:29:07 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cH1\u003eQuestion 2\u003c/H1\u003e\n"
+          },
+          {
+            "type": "HTML",
+            "data": "\u003cH3\u003eWhat is the most prescribed medication in each state?\u003c/H3\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525224484883_-7754860",
+      "id": "20180501-212804_1091082806",
+      "dateCreated": "May 1, 2018 9:28:04 PM",
+      "dateStarted": "May 10, 2018 7:24:57 AM",
+      "dateFinished": "May 10, 2018 7:24:57 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nfrom pyspark.sql import SQLContext\nsqlContext \u003d SQLContext(spark)\n\npart_d \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Project/Data/Part D_Prescriber/Part_D_All/PartD_Combined.csv\",header \u003d \"True\")",
+      "user": "anonymous",
+      "dateUpdated": "May 18, 2019 12:25:10 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": [],
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525951504712_1729656828",
+      "id": "20180510-072504_1785528429",
+      "dateCreated": "May 10, 2018 7:25:04 AM",
+      "dateStarted": "May 10, 2018 7:40:46 AM",
+      "dateFinished": "May 10, 2018 7:40:46 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nfrom pyspark.sql.types import DoubleType\nfrom pyspark.sql.types import *\npart_d_new \u003d part_d.withColumn(\"total_drug_cost\",part_d[\"total_drug_cost\"].cast(DoubleType()))\npart_d_new \u003d part_d.withColumn(\"total_day_supply\",part_d[\"total_day_supply\"].cast(DoubleType()))\npart_d_new \u003d part_d.withColumn(\"total_claim_count\",part_d[\"total_claim_count\"].cast(DoubleType()))",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:40:48 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525951559509_990615487",
+      "id": "20180510-072559_552420830",
+      "dateCreated": "May 10, 2018 7:25:59 AM",
+      "dateStarted": "May 10, 2018 7:40:48 AM",
+      "dateFinished": "May 10, 2018 7:40:48 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\npart_d_new.registerTempTable(\"part_d_new\")\nA \u003d spark.sql(\"SELECT A.state,drug_name,total_claim_count,day_supply,ROUND(total_cost_millions) AS total_cost_millions FROM (SELECT drug_name,nppes_provider_state AS state, ROUND(SUM(total_claim_count)) AS total_claim_count,ROUND(SUM(total_day_supply)) AS day_supply,ROUND(SUM(total_drug_cost))/1e6 AS total_cost_millions FROM `part_d_new` GROUP BY state,drug_name) A INNER JOIN (SELECT state,MAX(total_claim_count) AS max_total_claim_count FROM (SELECT nppes_provider_state AS state, ROUND(SUM(total_claim_count)) AS total_claim_count FROM `part_d_new` GROUP BY state,drug_name) GROUP BY state) B ON A.state \u003d B.state AND A.total_claim_count \u003d B.max_total_claim_count ORDER BY A.total_claim_count DESC\")",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:40:51 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525951639646_2102679371",
+      "id": "20180510-072719_1570722669",
+      "dateCreated": "May 10, 2018 7:27:19 AM",
+      "dateStarted": "May 10, 2018 7:40:51 AM",
+      "dateFinished": "May 10, 2018 7:40:51 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\npdf1\u003dA.toPandas()\nimport plotly\n\nscl \u003d [[0.0, \u0027rgb(255,233,225)\u0027],[0.2, \u0027rgb(249,220,211)\u0027],[0.4, \u0027rgb(227,192,183)\u0027], [0.6, \u0027rgb(210,178,167)\u0027],[0.8, \u0027rgb(182,151,146)\u0027],[1.0, \u0027#734842\u0027]]\n\ndef plot(plot_dic, height\u003d500, width\u003d1500, **kwargs):\n    kwargs[\u0027output_type\u0027] \u003d \u0027div\u0027\n    plot_str \u003d plotly.offline.plot(plot_dic, **kwargs)\n    print(\u0027%%angular \u003cdiv style\u003d\"height: %ipx; width: %spx\"\u003e %s \u003c/div\u003e\u0027 % (height, width, plot_str))\n    \ndata \u003d [ dict(\n        type\u003d\u0027choropleth\u0027,\n        colorscale \u003d scl,\n        autocolorscale \u003d False,\n        locations \u003d pdf1.state,\n        z \u003d pdf1.total_cost_millions,\n        locationmode \u003d \u0027USA-states\u0027,\n        text \u003d pdf1.drug_name,\n        marker \u003d dict(\n            line \u003d dict (\n                color \u003d \u0027rgb(255,255,255)\u0027,\n                width \u003d 2\n            ) ),\n        colorbar \u003d dict(\n            title \u003d \"Count of Prescription in millions\")\n        )\n       ]\n\nlayout \u003d dict(\n        title \u003d \u0027Most Prescribed Medicine in Each State\u0027,\n        geo \u003d dict(\n            scope\u003d\u0027usa\u0027,\n            projection\u003ddict( type\u003d\u0027albers usa\u0027 ),\n            showlakes \u003d True,\n            lakecolor \u003d \u0027rgb(255, 255, 255)\u0027),\n             )\n    \nfig \u003d dict( data\u003ddata, layout\u003dlayout )\nplot( fig, filename\u003d\u0027d3-cloropleth-map\u0027 )",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:43:07 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1525951662133_463294956",
+      "id": "20180510-072742_392300274",
+      "dateCreated": "May 10, 2018 7:27:42 AM",
+      "dateStarted": "May 10, 2018 7:43:07 AM",
+      "dateFinished": "May 10, 2018 7:43:16 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nprint(\"%html \u003cH1\u003eQuestion 3\u003c/H1\u003e\")\nprint(\"%html \u003cH3\u003eWhat is the average cost for inpatient and outpatient treatment in each city and state?\u003c/H3\u003e\")\n",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:25:03 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cH1\u003eQuestion 3\u003c/H1\u003e\n"
+          },
+          {
+            "type": "HTML",
+            "data": "\u003cH3\u003eWhat is the average cost for inpatient and outpatient treatment in each city and state?\u003c/H3\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525229395217_-304607586",
+      "id": "20180501-224955_2081295311",
+      "dateCreated": "May 1, 2018 10:49:55 PM",
+      "dateStarted": "May 1, 2018 10:51:14 PM",
+      "dateFinished": "May 1, 2018 10:51:14 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\ninPatientAll \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Inpatient_combined/InpatientAll.csv\",header\u003dTrue)\noutPatientAll \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Outpatient_combined/Outpatient_All.csv\",header\u003dTrue)",
+      "user": "anonymous",
+      "dateUpdated": "May 18, 2019 12:25:24 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": [],
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525950571349_-1611622449",
+      "id": "20180510-070931_886499846",
+      "dateCreated": "May 10, 2018 7:09:31 AM",
+      "dateStarted": "May 10, 2018 7:43:37 AM",
+      "dateFinished": "May 10, 2018 7:43:39 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nfrom pyspark.sql import SQLContext\nsqlContext \u003d SQLContext(spark)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:43:41 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525225800397_-1834470427",
+      "id": "20180501-215000_1357067387",
+      "dateCreated": "May 1, 2018 9:50:00 PM",
+      "dateStarted": "May 10, 2018 7:43:41 AM",
+      "dateFinished": "May 10, 2018 7:43:41 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\ninPatientAll.registerTempTable(\u0027inPatientAll\u0027)\noutPatientAll.registerTempTable(\u0027outPatientAll\u0027)\ntest \u003d sqlContext.sql(\u0027SELECT OP.`Provider State` AS State, OP.`Provider City` AS City, OP.`Provider Id` AS Provider_ID,\\\n                ROUND(OP.average_OP_cost) AS Average_OP_Cost, ROUND(IP.average_IP_cost) AS Average_IP_Cost, ROUND(OP.average_OP_cost + IP.average_IP_cost) AS Combined_Average_Cost\\\n                FROM ( SELECT `Provider State`,`Provider City`,`Provider Id`,SUM(`Average Total Payments`*`Outpatient Services`)/SUM(`Outpatient Services`) AS average_OP_cost\\\n                FROM outPatientAll GROUP BY `Provider State`, `Provider City`, `Provider Id` ) AS OP\\\n                INNER JOIN ( SELECT `Provider State`, `Provider City`,`Provider Id`,SUM(`Average Medicare Payments`*`Total Discharges`)/SUM(`Total Discharges`) AS average_IP_cost\\\n                FROM inPatientAll GROUP BY `Provider State`,`Provider City`, `Provider Id` ) AS IP\\\n                ON OP.`Provider Id` \u003d IP.`Provider Id` AND OP.`Provider State` \u003d IP.`Provider State` AND OP.`Provider City` \u003d IP.`Provider City`\\\n                ORDER BY combined_average_cost DESC\u0027)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:43:44 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525226040575_1836371212",
+      "id": "20180501-215400_1023301774",
+      "dateCreated": "May 1, 2018 9:54:00 PM",
+      "dateStarted": "May 10, 2018 7:43:44 AM",
+      "dateFinished": "May 10, 2018 7:43:44 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\ntest2 \u003d sqlContext.sql(\u0027SELECT OP.`Provider State` AS State, OP.`Provider City` AS City, OP.`Provider Id` AS Provider_ID,\\\n                ROUND(OP.average_OP_cost) AS Average_OP_Cost, ROUND(IP.average_IP_cost) AS Average_IP_Cost, ROUND(OP.average_OP_cost + IP.average_IP_cost) AS Combined_Average_Cost\\\n                FROM ( SELECT `Provider State`,`Provider City`,`Provider Id`,SUM(`Average Total Payments`*`Outpatient Services`)/SUM(`Outpatient Services`) AS average_OP_cost\\\n                FROM outPatientAll GROUP BY `Provider State`, `Provider City`, `Provider Id` ) AS OP\\\n                INNER JOIN ( SELECT `Provider State`, `Provider City`,`Provider Id`,SUM(`Average Medicare Payments`*`Total Discharges`)/SUM(`Total Discharges`) AS average_IP_cost\\\n                FROM inPatientAll GROUP BY `Provider State`,`Provider City`, `Provider Id` ) AS IP\\\n                ON OP.`Provider Id` \u003d IP.`Provider Id` AND OP.`Provider State` \u003d IP.`Provider State` AND OP.`Provider City` \u003d IP.`Provider City`\\\n                ORDER BY combined_average_cost\u0027)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:43:46 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525939285882_-175072842",
+      "id": "20180510-040125_1718543860",
+      "dateCreated": "May 10, 2018 4:01:25 AM",
+      "dateStarted": "May 10, 2018 7:43:46 AM",
+      "dateFinished": "May 10, 2018 7:43:46 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\ntop10 \u003d test.limit(10)\nbottom10 \u003d test2.limit(10)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:43:49 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525938593005_1517461640",
+      "id": "20180510-034953_1704149281",
+      "dateCreated": "May 10, 2018 3:49:53 AM",
+      "dateStarted": "May 10, 2018 7:43:49 AM",
+      "dateFinished": "May 10, 2018 7:43:49 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nz.show(top10)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:43:52 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "multiBarChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "City",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "State",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "Average_OP_Cost",
+                  "index": 3.0,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Average_IP_Cost",
+                  "index": 4.0,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Combined_Average_Cost",
+                  "index": 5.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "State\tCity\tProvider_ID\tAverage_OP_Cost\tAverage_IP_Cost\tCombined_Average_Cost\nMI\tWARREN\t230264\t104.0\t75042.0\t75145.0\nTX\tHOUSTON\t450674\t88.0\t74846.0\t74933.0\nCO\tVAIL\t060096\t244.0\t36556.0\t36800.0\nLA\tBATON ROUGE\t190128\t87.0\t35628.0\t35715.0\nCO\tVAIL\t60096\t252.0\t35027.0\t35279.0\nOK\tTULSA\t370190\t66.0\t31161.0\t31227.0\nCA\tSAN FRANCISCO\t050454\t146.0\t28786.0\t28931.0\nCA\tLOS BANOS\t50528\t298.0\t27565.0\t27864.0\nCA\tLOS BANOS\t050528\t265.0\t27291.0\t27556.0\nCA\tSAN FRANCISCO\t50454\t152.0\t27224.0\t27375.0\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525939331139_992148052",
+      "id": "20180510-040211_1179459922",
+      "dateCreated": "May 10, 2018 4:02:11 AM",
+      "dateStarted": "May 10, 2018 7:43:52 AM",
+      "dateFinished": "May 10, 2018 7:43:59 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nz.show(bottom10)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:44:04 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "State\tCity\tProvider_ID\tAverage_OP_Cost\tAverage_IP_Cost\tCombined_Average_Cost\nAL\tJACKSON\t010128\t146.0\t3357.0\t3503.0\nLA\tLAKE CHARLES\t190161\t110.0\t3526.0\t3636.0\nFL\tWILLISTON\t100139\t240.0\t3399.0\t3639.0\nAL\tGROVE HILL\t10091\t252.0\t3407.0\t3659.0\nAL\tBREWTON\t10099\t254.0\t3447.0\t3701.0\nIN\tCHARLESTOWN\t150163\t202.0\t3551.0\t3753.0\nTX\tAUSTIN\t450865\t395.0\t3423.0\t3818.0\nTN\tSOMERVILLE\t440168\t257.0\t3631.0\t3888.0\nTN\tTRENTON\t440047\t208.0\t3687.0\t3895.0\nAL\tJACKSON\t10128\t250.0\t3685.0\t3935.0\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525939385869_-844765791",
+      "id": "20180510-040305_177117220",
+      "dateCreated": "May 10, 2018 4:03:05 AM",
+      "dateStarted": "May 10, 2018 7:44:04 AM",
+      "dateFinished": "May 10, 2018 7:44:09 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nprint(\"%html \u003cH1\u003eQuestion 4\u003c/H1\u003e\")\nprint(\"%html \u003cH3\u003eWhich are the most common inpatient diagnostic conditions in the United States?\u003c/H3\u003e\")",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:14:13 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cH1\u003eQuestion 4\u003c/H1\u003e\n"
+          },
+          {
+            "type": "HTML",
+            "data": "\u003cH3\u003eWhich are the most common inpatient diagnostic conditions in the United States?\u003c/H3\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525231900330_-1681236982",
+      "id": "20180501-233140_2121014782",
+      "dateCreated": "May 1, 2018 11:31:40 PM",
+      "dateStarted": "May 10, 2018 7:11:38 AM",
+      "dateFinished": "May 10, 2018 7:11:38 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nimport pandas as pd\ninPatientAll \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Inpatient_combined/InpatientAll.csv\",header\u003dTrue)\ninPatient_2011 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Provider_Charge_Inpatient_DRG100_FY2011.csv\",header\u003dTrue)\ninPatient_2012 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Provider_Charge_Inpatient_DRG100_FY2012.csv\",header\u003dTrue)\ninPatient_2013 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Provider_Charge_Inpatient_DRG100_FY2013.csv\",header\u003dTrue)\ninPatient_2014 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Provider_Charge_Inpatient_DRGALL_FY2014.csv\",header\u003dTrue)\ninPatient_2015 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Provider_Charge_Inpatient_DRGALL_FY2015.csv\",header\u003dTrue) ",
+      "user": "anonymous",
+      "dateUpdated": "May 18, 2019 12:26:31 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": [],
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525950698289_2020223278",
+      "id": "20180510-071138_1955568085",
+      "dateCreated": "May 10, 2018 7:11:38 AM",
+      "dateStarted": "May 10, 2018 7:44:14 AM",
+      "dateFinished": "May 10, 2018 7:44:16 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\ninPatientAll \u003d inPatientAll.select(\u0027DRG Definition\u0027,\u0027Provider City\u0027,\u0027Provider State\u0027,\u0027Total Discharges\u0027,\u0027Average Total Payments\u0027)\ninPatient_2011 \u003d inPatient_2011.select(\u0027DRG Definition\u0027,\u0027Provider City\u0027,\u0027Provider State\u0027,\u0027Total Discharges\u0027,\u0027Average Total Payments\u0027)\ninPatient_2012 \u003d inPatient_2012.select(\u0027DRG Definition\u0027,\u0027Provider City\u0027,\u0027Provider State\u0027,\u0027Total Discharges\u0027,\u0027Average Total Payments\u0027)\ninPatient_2013 \u003d inPatient_2013.select(\u0027DRG Definition\u0027,\u0027Provider City\u0027,\u0027Provider State\u0027,\u0027Total Discharges\u0027,\u0027Average Total Payments\u0027)\ninPatient_2014 \u003d inPatient_2014.select(\u0027DRG Definition\u0027,\u0027Provider City\u0027,\u0027Provider State\u0027,\u0027Total Discharges\u0027,\u0027Average Total Payments\u0027)\ninPatient_2015 \u003d inPatient_2015.select(\u0027DRG Definition\u0027,\u0027Provider City\u0027,\u0027Provider State\u0027,\u0027Total Discharges\u0027,\u0027Average Total Payments\u0027)\n\ninPatient_2015.show()",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:44:18 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+-------------+--------------+----------------+----------------------+\n|      DRG Definition|Provider City|Provider State|Total Discharges|Average Total Payments|\n+--------------------+-------------+--------------+----------------+----------------------+\n|001 - HEART TRANS...|   BIRMINGHAM|            AL|              11|             171081.18|\n|001 - HEART TRANS...|      PHOENIX|            AZ|              28|             194081.39|\n|001 - HEART TRANS...|    SAN DIEGO|            CA|              21|             324050.71|\n|001 - HEART TRANS...|    SAN DIEGO|            CA|              18|             257177.33|\n|001 - HEART TRANS...|   SACRAMENTO|            CA|              17|             346150.12|\n|001 - HEART TRANS...|  LOS ANGELES|            CA|              19|             449486.11|\n|001 - HEART TRANS...|     STANFORD|            CA|              17|             442429.18|\n|001 - HEART TRANS...|SAN FRANCISCO|            CA|              19|             394118.89|\n|001 - HEART TRANS...|  LOS ANGELES|            CA|              44|             326124.27|\n|001 - HEART TRANS...|       AURORA|            CO|              11|             225019.73|\n|001 - HEART TRANS...|    NEW HAVEN|            CT|              13|             268305.23|\n|001 - HEART TRANS...|     HARTFORD|            CT|              16|             303569.69|\n|001 - HEART TRANS...|   WASHINGTON|            DC|              42|             225530.48|\n|001 - HEART TRANS...|      ORLANDO|            FL|              30|             188579.17|\n|001 - HEART TRANS...|        TAMPA|            FL|              35|             187168.69|\n|001 - HEART TRANS...| JACKSONVILLE|            FL|              13|             249000.46|\n|001 - HEART TRANS...|      ATLANTA|            GA|              15|                221120|\n|001 - HEART TRANS...|      ATLANTA|            GA|              21|             265781.71|\n|001 - HEART TRANS...|      CHICAGO|            IL|              22|             352630.77|\n|001 - HEART TRANS...|     OAK LAWN|            IL|              48|             385395.63|\n+--------------------+-------------+--------------+----------------+----------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525950724520_1791282882",
+      "id": "20180510-071204_260716534",
+      "dateCreated": "May 10, 2018 7:12:04 AM",
+      "dateStarted": "May 10, 2018 7:44:18 AM",
+      "dateFinished": "May 10, 2018 7:44:18 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nfrom pyspark.sql import SQLContext\nsqlContext \u003d SQLContext(spark)\ninPatientAll.registerTempTable(\u0027inPatientAll\u0027)\ninPatient_2011.registerTempTable(\u0027inPatient_2011\u0027)\ninPatient_2012.registerTempTable(\u0027inPatient_2012\u0027)\ninPatient_2013.registerTempTable(\u0027inPatient_2013\u0027)\ninPatient_2014.registerTempTable(\u0027inPatient_2014\u0027)\ninPatient_2015.registerTempTable(\u0027inPatient_2015\u0027)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:44:22 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525950757264_2090278750",
+      "id": "20180510-071237_1447471359",
+      "dateCreated": "May 10, 2018 7:12:37 AM",
+      "dateStarted": "May 10, 2018 7:44:22 AM",
+      "dateFinished": "May 10, 2018 7:44:22 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nsql1 \u003d \u0027SELECT\\\n        `DRG Definition` AS drg_definition,\\\n        `Provider City` AS provider_city,\\\n        `Provider State` AS provider_state,\\\n        SUM(`Total Discharges`) AS citywise_num_cases,\\\n        SUM(`Average Total Payments` * `Total Discharges`)/ SUM(`Total Discharges`) AS citywise_avg_total_payments,\\\n        SUM(`Average Total Payments` * `Total Discharges`) AS citywise_sum_total_payments\\\n      FROM\\\n        inPatientAll\\\n      GROUP BY\\\n        drg_definition,\\\n        provider_city,\\\n        provider_state \u0027\n        \nsql2 \u003d \u0027SELECT\\\n        `DRG Definition` AS drg_definition,\\\n        `Provider City` AS provider_city,\\\n        `Provider State` AS provider_state,\\\n        SUM(`Total Discharges`) AS citywise_num_cases,\\\n        SUM(`Average Total Payments` * `Total Discharges`)/ SUM(`Total Discharges`) AS citywise_avg_total_payments,\\\n        SUM(`Average Total Payments` * `Total Discharges`) AS citywise_sum_total_payments\\\n      FROM\\\n        inPatient_2011\\\n      GROUP BY\\\n        drg_definition,\\\n        provider_city,\\\n        provider_state \u0027\n\nsql3 \u003d \u0027SELECT\\\n        `DRG Definition` AS drg_definition,\\\n        `Provider City` AS provider_city,\\\n        `Provider State` AS provider_state,\\\n        SUM(`Total Discharges`) AS citywise_num_cases,\\\n        SUM(`Average Total Payments` * `Total Discharges`)/ SUM(`Total Discharges`) AS citywise_avg_total_payments,\\\n        SUM(`Average Total Payments` * `Total Discharges`) AS citywise_sum_total_payments\\\n      FROM\\\n        inPatient_2012\\\n      GROUP BY\\\n        drg_definition,\\\n        provider_city,\\\n        provider_state \u0027\n        \nsql4 \u003d \u0027SELECT\\\n        `DRG Definition` AS drg_definition,\\\n        `Provider City` AS provider_city,\\\n        `Provider State` AS provider_state,\\\n        SUM(`Total Discharges`) AS citywise_num_cases,\\\n        SUM(`Average Total Payments` * `Total Discharges`)/ SUM(`Total Discharges`) AS citywise_avg_total_payments,\\\n        SUM(`Average Total Payments` * `Total Discharges`) AS citywise_sum_total_payments\\\n      FROM\\\n        inPatient_2013\\\n      GROUP BY\\\n        drg_definition,\\\n        provider_city,\\\n        provider_state \u0027\n        \nsql5 \u003d \u0027SELECT\\\n        `DRG Definition` AS drg_definition,\\\n        `Provider City` AS provider_city,\\\n        `Provider State` AS provider_state,\\\n        SUM(`Total Discharges`) AS citywise_num_cases,\\\n        SUM(`Average Total Payments` * `Total Discharges`)/ SUM(`Total Discharges`) AS citywise_avg_total_payments,\\\n        SUM(`Average Total Payments` * `Total Discharges`) AS citywise_sum_total_payments\\\n      FROM\\\n        inPatient_2014\\\n      GROUP BY\\\n        drg_definition,\\\n        provider_city,\\\n        provider_state \u0027\n        \nsql6 \u003d \u0027SELECT\\\n        `DRG Definition` AS drg_definition,\\\n        `Provider City` AS provider_city,\\\n        `Provider State` AS provider_state,\\\n        SUM(`Total Discharges`) AS citywise_num_cases,\\\n        SUM(`Average Total Payments` * `Total Discharges`)/ SUM(`Total Discharges`) AS citywise_avg_total_payments,\\\n        SUM(`Average Total Payments` * `Total Discharges`) AS citywise_sum_total_payments\\\n      FROM\\\n        inPatient_2015\\\n      GROUP BY\\\n        drg_definition,\\\n        provider_city,\\\n        provider_state \u0027\n\n\n  \nqueryAll \u003d sqlContext.sql(sql1)\nquery2011 \u003d sqlContext.sql(sql2)\nquery2012 \u003d sqlContext.sql(sql3)\nquery2013 \u003d sqlContext.sql(sql4)\nquery2014 \u003d sqlContext.sql(sql5)\nquery2015 \u003d sqlContext.sql(sql6)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:44:24 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525950787471_-919365064",
+      "id": "20180510-071307_2059658786",
+      "dateCreated": "May 10, 2018 7:13:07 AM",
+      "dateStarted": "May 10, 2018 7:44:24 AM",
+      "dateFinished": "May 10, 2018 7:44:24 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nqueryAll.show()",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:44:28 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+----------------+--------------+------------------+---------------------------+---------------------------+\n|      drg_definition|   provider_city|provider_state|citywise_num_cases|citywise_avg_total_payments|citywise_sum_total_payments|\n+--------------------+----------------+--------------+------------------+---------------------------+---------------------------+\n| 638 - DIABETES W CC|      MIDDLEBURG|            FL|              25.0|              4489.91999984|              112247.999996|\n| 638 - DIABETES W CC|        KANKAKEE|            IL|             176.0|          5496.653749920454|              967411.059986|\n| 638 - DIABETES W CC|       COVINGTON|            LA|              75.0|         4945.9205332266665|              370944.039992|\n| 638 - DIABETES W CC|       JOHNSTOWN|            PA|             199.0|         5952.1415076783915|             1184476.160028|\n| 638 - DIABETES W CC|  SALT LAKE CITY|            UT|              51.0|          7077.137843058824|              360934.029996|\n| 638 - DIABETES W CC|         KENOSHA|            WI|             146.0|          5150.074657410959|              751910.899982|\n| 638 - DIABETES W CC|         CYPRESS|            TX|              65.0|          4750.091538461538|                  308755.95|\n|639 - DIABETES W/...|     PORTERVILLE|            CA|              14.0|                    5840.14|                   81761.96|\n|640 - MISC DISORD...|          MOBILE|            AL|             636.0|          6593.251336536164|             4193307.850037|\n|640 - MISC DISORD...|      TUSCALOOSA|            AL|             535.0|          7059.727775674766|         3776954.3599859998|\n|640 - MISC DISORD...|      BRIDGEPORT|            CT|             416.0|         10643.410913298078|             4427658.939932|\n|640 - MISC DISORD...|        LA PLATA|            MD|             100.0|          7885.920000030001|              788592.000003|\n|640 - MISC DISORD...|         BEL AIR|            MD|             149.0|           9085.60382571141|         1353754.9700310002|\n|640 - MISC DISORD...|LAKE SAINT LOUIS|            MO|              28.0|                    6477.21|                  181361.88|\n|640 - MISC DISORD...|         READING|            PA|             353.0|          8548.858441943343|             3017747.030006|\n|640 - MISC DISORD...|      ROUND ROCK|            TX|             316.0|          6671.692658142405|             2108254.879973|\n|640 - MISC DISORD...|       TEXARKANA|            TX|             248.0|          6280.015645141129|             1557443.879995|\n|641 - MISC DISORD...|     ZEPHYRHILLS|            FL|             176.0|          4059.846590772727|          714532.9999759999|\n|641 - MISC DISORD...|    LEHIGH ACRES|            FL|             104.0|          4073.509423038461|         423644.97999599995|\n|641 - MISC DISORD...|       DAHLONEGA|            GA|              29.0|         4780.6551724137935|                   138639.0|\n+--------------------+----------------+--------------+------------------+---------------------------+---------------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525950813337_-891632495",
+      "id": "20180510-071333_1629479071",
+      "dateCreated": "May 10, 2018 7:13:33 AM",
+      "dateStarted": "May 10, 2018 7:44:28 AM",
+      "dateFinished": "May 10, 2018 7:44:30 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nprint(\"%html \u003cH1\u003eQuestion 5\u003c/H1\u003e\")\nprint(\"%html \u003cH3\u003eWhich cities have the most number of cases for each diagnostic condition?\u003c/H3\u003e\")",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:17:51 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cH1\u003eQuestion 5\u003c/H1\u003e\n"
+          },
+          {
+            "type": "HTML",
+            "data": "\u003cH3\u003eWhich cities have the most number of cases for each diagnostic condition?\u003c/H3\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525950838769_-1889640494",
+      "id": "20180510-071358_991969648",
+      "dateCreated": "May 10, 2018 7:13:58 AM",
+      "dateStarted": "May 10, 2018 7:15:23 AM",
+      "dateFinished": "May 10, 2018 7:15:23 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nqueryAll.registerTempTable(\u0027queryAll\u0027)\nquery2011.registerTempTable(\u0027query2011\u0027)\nquery2012.registerTempTable(\u0027query2012\u0027)\nquery2013.registerTempTable(\u0027query2013\u0027)\nquery2014.registerTempTable(\u0027query2014\u0027)\nquery2015.registerTempTable(\u0027query2015\u0027)\n\nsql7 \u003d \u0027SELECT\\\n      drg_definition,\\\n      provider_city,\\\n      provider_state,\\\n      citywise_avg_total_payments,\\\n      RANK() OVER (PARTITION BY drg_definition ORDER BY citywise_num_cases DESC ) AS cityrank,\\\n      SUM(citywise_num_cases) OVER (PARTITION BY drg_definition ) AS national_num_cases,\\\n      SUM(citywise_sum_total_payments) OVER (PARTITION BY drg_definition ) AS national_sum_total_payments\\\n      FROM queryAll\u0027\n      \nsql8 \u003d \u0027SELECT\\\n      drg_definition,\\\n      provider_city,\\\n      provider_state,\\\n      citywise_avg_total_payments,\\\n      RANK() OVER (PARTITION BY drg_definition ORDER BY citywise_num_cases DESC ) AS cityrank,\\\n      SUM(citywise_num_cases) OVER (PARTITION BY drg_definition ) AS national_num_cases,\\\n      SUM(citywise_sum_total_payments) OVER (PARTITION BY drg_definition ) AS national_sum_total_payments\\\n      FROM query2011\u0027\n      \nsql9 \u003d \u0027SELECT\\\n      drg_definition,\\\n      provider_city,\\\n      provider_state,\\\n      citywise_avg_total_payments,\\\n      RANK() OVER (PARTITION BY drg_definition ORDER BY citywise_num_cases DESC ) AS cityrank,\\\n      SUM(citywise_num_cases) OVER (PARTITION BY drg_definition ) AS national_num_cases,\\\n      SUM(citywise_sum_total_payments) OVER (PARTITION BY drg_definition ) AS national_sum_total_payments\\\n      FROM query2012\u0027\n      \nsql10 \u003d \u0027SELECT\\\n      drg_definition,\\\n      provider_city,\\\n      provider_state,\\\n      citywise_avg_total_payments,\\\n      RANK() OVER (PARTITION BY drg_definition ORDER BY citywise_num_cases DESC ) AS cityrank,\\\n      SUM(citywise_num_cases) OVER (PARTITION BY drg_definition ) AS national_num_cases,\\\n      SUM(citywise_sum_total_payments) OVER (PARTITION BY drg_definition ) AS national_sum_total_payments\\\n      FROM query2013\u0027\n      \nsql11 \u003d \u0027SELECT\\\n      drg_definition,\\\n      provider_city,\\\n      provider_state,\\\n      citywise_avg_total_payments,\\\n      RANK() OVER (PARTITION BY drg_definition ORDER BY citywise_num_cases DESC ) AS cityrank,\\\n      SUM(citywise_num_cases) OVER (PARTITION BY drg_definition ) AS national_num_cases,\\\n      SUM(citywise_sum_total_payments) OVER (PARTITION BY drg_definition ) AS national_sum_total_payments\\\n      FROM query2014\u0027\n      \nsql12 \u003d \u0027SELECT\\\n      drg_definition,\\\n      provider_city,\\\n      provider_state,\\\n      citywise_avg_total_payments,\\\n      RANK() OVER (PARTITION BY drg_definition ORDER BY citywise_num_cases DESC ) AS cityrank,\\\n      SUM(citywise_num_cases) OVER (PARTITION BY drg_definition ) AS national_num_cases,\\\n      SUM(citywise_sum_total_payments) OVER (PARTITION BY drg_definition ) AS national_sum_total_payments\\\n      FROM query2015\u0027\n      \nquery_a \u003d sqlContext.sql(sql7)\nquery_b \u003d sqlContext.sql(sql8)\nquery_c \u003d sqlContext.sql(sql9)\nquery_d \u003d sqlContext.sql(sql10)\nquery_e \u003d sqlContext.sql(sql11)\nquery_f \u003d sqlContext.sql(sql12)\n",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:44:33 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525950923033_-1125374292",
+      "id": "20180510-071523_1528696195",
+      "dateCreated": "May 10, 2018 7:15:23 AM",
+      "dateStarted": "May 10, 2018 7:44:33 AM",
+      "dateFinished": "May 10, 2018 7:44:33 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nquery_a.show()",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:44:37 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+-------------+--------------+---------------------------+--------+------------------+---------------------------+\n|      drg_definition|provider_city|provider_state|citywise_avg_total_payments|cityrank|national_num_cases|national_sum_total_payments|\n+--------------------+-------------+--------------+---------------------------+--------+------------------+---------------------------+\n|656 - KIDNEY \u0026 UR...|      ATLANTA|            GA|         25595.095713015875|       1|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...|  LOS ANGELES|            CA|          46721.11163636364|       2|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...|     NEW YORK|            NY|          39428.61454545455|       3|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...|SAN FRANCISCO|            CA|          60011.29292878049|       4|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...| INDIANAPOLIS|            IN|          31542.46487804878|       4|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...| PHILADELPHIA|            PA|          38782.97775125001|       6|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...|    CHARLOTTE|            NC|          29377.44710342106|       7|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...|       DURHAM|            NC|          34385.26918837838|       8|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...|    CLEVELAND|            OH|          34620.21810810811|       8|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...|      MEMPHIS|            TN|                 23963.7225|      10|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...|      NORFOLK|            VA|         27046.468235294116|      11|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...|  SAINT LOUIS|            MO|         27949.264413235294|      11|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...|    ROCHESTER|            MN|          43341.23706000001|      11|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...|  KANSAS CITY|            KS|           25270.8150015625|      14|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...|      CHICAGO|            IL|          29377.32193580645|      15|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...| JACKSONVILLE|            FL|          27638.03451612903|      15|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...|      PHOENIX|            AZ|         32248.234665333333|      17|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...|    ANN ARBOR|            MI|         39493.604999999996|      18|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...|    ROYAL OAK|            MI|         25654.645714285718|      18|            1320.0|       4.4474138550170004E7|\n|656 - KIDNEY \u0026 UR...|      ORLANDO|            FL|          32413.03777888889|      20|            1320.0|       4.4474138550170004E7|\n+--------------------+-------------+--------------+---------------------------+--------+------------------+---------------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525951048725_1357946707",
+      "id": "20180510-071728_8969756",
+      "dateCreated": "May 10, 2018 7:17:28 AM",
+      "dateStarted": "May 10, 2018 7:44:37 AM",
+      "dateFinished": "May 10, 2018 7:44:47 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nprint(\"%html \u003cH1\u003eQuestion 6\u003c/H1\u003e\")\nprint(\"%html \u003cH3\u003eWhat are the average payments for these conditions in these cities and how do they compare to the national average?\u003c/H3\u003e\")",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:44:40 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cH1\u003eQuestion 6\u003c/H1\u003e\n"
+          },
+          {
+            "type": "HTML",
+            "data": "\u003cH3\u003eWhat are the average payments for these conditions in these cities and how do they compare to the national average?\u003c/H3\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525950927152_441707978",
+      "id": "20180510-071527_426111557",
+      "dateCreated": "May 10, 2018 7:15:27 AM",
+      "dateStarted": "May 10, 2018 7:18:41 AM",
+      "dateFinished": "May 10, 2018 7:18:41 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nquery_a.registerTempTable(\u0027query_a\u0027)\nquery_b.registerTempTable(\u0027query_b\u0027)\nquery_c.registerTempTable(\u0027query_c\u0027)\nquery_d.registerTempTable(\u0027query_d\u0027)\nquery_e.registerTempTable(\u0027query_e\u0027)\nquery_f.registerTempTable(\u0027query_f\u0027)\n\nsql13 \u003d \u0027SELECT\\\n    drg_definition,\\\n    provider_city,\\\n    provider_state,\\\n    cityrank,\\\n    national_num_cases,\\\n    citywise_avg_total_payments,\\\n    national_sum_total_payments,\\\n    (national_sum_total_payments /national_num_cases) AS national_avg_total_payments\\\n    FROM query_a\\\n    WHERE cityrank \u003c\u003d3\u0027\n    \nsql14 \u003d \u0027SELECT\\\n    drg_definition,\\\n    provider_city,\\\n    provider_state,\\\n    cityrank,\\\n    national_num_cases,\\\n    citywise_avg_total_payments,\\\n    national_sum_total_payments,\\\n    (national_sum_total_payments /national_num_cases) AS national_avg_total_payments\\\n    FROM query_b\\\n    WHERE cityrank \u003c\u003d3\u0027\n\nsql15 \u003d \u0027SELECT\\\n    drg_definition,\\\n    provider_city,\\\n    provider_state,\\\n    cityrank,\\\n    national_num_cases,\\\n    citywise_avg_total_payments,\\\n    national_sum_total_payments,\\\n    (national_sum_total_payments /national_num_cases) AS national_avg_total_payments\\\n    FROM query_c\\\n    WHERE cityrank \u003c\u003d3\u0027\n\nsql16 \u003d \u0027SELECT\\\n    drg_definition,\\\n    provider_city,\\\n    provider_state,\\\n    cityrank,\\\n    national_num_cases,\\\n    citywise_avg_total_payments,\\\n    national_sum_total_payments,\\\n    (national_sum_total_payments /national_num_cases) AS national_avg_total_payments\\\n    FROM query_d\\\n    WHERE cityrank \u003c\u003d3\u0027\n    \nsql17 \u003d \u0027SELECT\\\n    drg_definition,\\\n    provider_city,\\\n    provider_state,\\\n    cityrank,\\\n    national_num_cases,\\\n    citywise_avg_total_payments,\\\n    national_sum_total_payments,\\\n    (national_sum_total_payments /national_num_cases) AS national_avg_total_payments\\\n    FROM query_e\\\n    WHERE cityrank \u003c\u003d3\u0027\n    \nsql18 \u003d \u0027SELECT\\\n    drg_definition,\\\n    provider_city,\\\n    provider_state,\\\n    cityrank,\\\n    national_num_cases,\\\n    citywise_avg_total_payments,\\\n    national_sum_total_payments,\\\n    (national_sum_total_payments /national_num_cases) AS national_avg_total_payments\\\n    FROM query_f\\\n    WHERE cityrank \u003c\u003d3\u0027\n    \nquery_p \u003d sqlContext.sql(sql13)\nquery_q \u003d sqlContext.sql(sql14)\nquery_r \u003d sqlContext.sql(sql15)\nquery_s \u003d sqlContext.sql(sql16)\nquery_t \u003d sqlContext.sql(sql17)\nquery_u \u003d sqlContext.sql(sql18)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:44:51 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525950926555_-1001485146",
+      "id": "20180510-071526_105626797",
+      "dateCreated": "May 10, 2018 7:15:26 AM",
+      "dateStarted": "May 10, 2018 7:44:51 AM",
+      "dateFinished": "May 10, 2018 7:44:52 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nquery_p.show()",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:44:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+-------------+--------------+--------+------------------+---------------------------+---------------------------+---------------------------+\n|      drg_definition|provider_city|provider_state|cityrank|national_num_cases|citywise_avg_total_payments|national_sum_total_payments|national_avg_total_payments|\n+--------------------+-------------+--------------+--------+------------------+---------------------------+---------------------------+---------------------------+\n|656 - KIDNEY \u0026 UR...|      ATLANTA|            GA|       1|            1320.0|         25595.095713015875|        4.447413855017002E7|         33692.529204674254|\n|656 - KIDNEY \u0026 UR...|  LOS ANGELES|            CA|       2|            1320.0|          46721.11163636364|        4.447413855017002E7|         33692.529204674254|\n|656 - KIDNEY \u0026 UR...|     NEW YORK|            NY|       3|            1320.0|          39428.61454545455|        4.447413855017002E7|         33692.529204674254|\n|977 - HIV W OR W/...|    BALTIMORE|            MD|       1|             416.0|         17908.355002124998|              6016672.09015|         14463.154062860576|\n|977 - HIV W OR W/...|        MIAMI|            FL|       2|             416.0|         16313.216086956521|              6016672.09015|         14463.154062860576|\n|977 - HIV W OR W/...|     NEW YORK|            NY|       2|             416.0|         16290.935653260869|              6016672.09015|         14463.154062860576|\n|180 - RESPIRATORY...|     NEW YORK|            NY|       1|           23434.0|         21526.326580415334|        3.060955159197229E8|          13062.02594178215|\n|180 - RESPIRATORY...|      CHICAGO|            IL|       2|           23434.0|          16514.18596288889|        3.060955159197229E8|          13062.02594178215|\n|180 - RESPIRATORY...|       BOSTON|            MA|       3|           23434.0|         19931.257510705396|        3.060955159197229E8|          13062.02594178215|\n|242 - PERMANENT C...|      HOUSTON|            TX|       1|           22814.0|          32190.43145121569|        6.022154633497995E8|          26396.75038791091|\n|242 - PERMANENT C...|       BOSTON|            MA|       2|           22814.0|          38374.67067545045|        6.022154633497995E8|          26396.75038791091|\n|242 - PERMANENT C...|     NEW YORK|            NY|       3|           22814.0|         42107.114607880176|        6.022154633497995E8|          26396.75038791091|\n|835 - ACUTE LEUKE...|    BALTIMORE|            MD|       1|             440.0|              55060.2361775|       1.4667081920160003E7|         33334.277091272736|\n|835 - ACUTE LEUKE...|      ORLANDO|            FL|       2|             440.0|          26599.44734857143|       1.4667081920160003E7|         33334.277091272736|\n|835 - ACUTE LEUKE...|   PITTSBURGH|            PA|       3|             440.0|         27973.998537073167|       1.4667081920160003E7|         33334.277091272736|\n|025 - CRANIOTOMY ...|       BOSTON|            MA|       1|           31012.0|          43018.78523167842|       1.0963765460919802E9|         35353.300209337685|\n|025 - CRANIOTOMY ...|     NEW YORK|            NY|       2|           31012.0|         50858.331658153365|       1.0963765460919802E9|         35353.300209337685|\n|025 - CRANIOTOMY ...|      CHICAGO|            IL|       3|           31012.0|          41223.75419833984|       1.0963765460919802E9|         35353.300209337685|\n|393 - OTHER DIGES...|     NEW YORK|            NY|       1|           30305.0|         20633.293704696356|         4.23418990380486E8|         13971.918507853028|\n|393 - OTHER DIGES...|    BALTIMORE|            MD|       2|           30305.0|         28513.417877007676|         4.23418990380486E8|         13971.918507853028|\n+--------------------+-------------+--------------+--------+------------------+---------------------------+---------------------------+---------------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525950926188_-775637542",
+      "id": "20180510-071526_2066959148",
+      "dateCreated": "May 10, 2018 7:15:26 AM",
+      "dateStarted": "May 10, 2018 7:44:56 AM",
+      "dateFinished": "May 10, 2018 7:45:23 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nquery_p.registerTempTable(\u0027query_p\u0027)\nquery_q.registerTempTable(\u0027query_q\u0027)\nquery_r.registerTempTable(\u0027query_r\u0027)\nquery_s.registerTempTable(\u0027query_s\u0027)\nquery_t.registerTempTable(\u0027query_t\u0027)\nquery_u.registerTempTable(\u0027query_u\u0027)\n\nsql19 \u003d \u0027SELECT\\\n    drg_definition AS Diagnosis,\\\n    provider_city AS City,\\\n    provider_state AS State,\\\n    national_num_cases AS Total_cases_US,\\\n    cityrank AS City_Rank,\\\n    CAST(ROUND(citywise_avg_total_payments) AS LONG) AS Citywise_Avg_Payments,\\\n    CONCAT(CAST(ROUND(citywise_avg_total_payments /national_avg_total_payments * 100, 0) AS STRING), \" %\") AS Avg_Payments_City_vs_National\\\n    FROM query_p\\\n    ORDER BY Total_cases_US DESC\u0027\n    \nsql20 \u003d \u0027SELECT\\\n    drg_definition AS Diagnosis,\\\n    provider_city AS City,\\\n    provider_state AS State,\\\n    national_num_cases AS Total_cases_US,\\\n    cityrank AS City_Rank,\\\n    CAST(ROUND(citywise_avg_total_payments) AS LONG) AS Citywise_Avg_Payments,\\\n    CONCAT(CAST(ROUND(citywise_avg_total_payments /national_avg_total_payments * 100, 0) AS STRING), \" %\") AS Avg_Payments_City_vs_National\\\n    FROM query_q\\\n    ORDER BY Total_cases_US DESC\u0027\n\nsql21 \u003d \u0027SELECT\\\n    drg_definition AS Diagnosis,\\\n    provider_city AS City,\\\n    provider_state AS State,\\\n    national_num_cases AS Total_cases_US,\\\n    cityrank AS City_Rank,\\\n    CAST(ROUND(citywise_avg_total_payments) AS LONG) AS Citywise_Avg_Payments,\\\n    CONCAT(CAST(ROUND(citywise_avg_total_payments /national_avg_total_payments * 100, 0) AS STRING), \" %\") AS Avg_Payments_City_vs_National\\\n    FROM query_r\\\n    ORDER BY Total_cases_US DESC\u0027\n    \nsql22 \u003d \u0027SELECT\\\n    drg_definition AS Diagnosis,\\\n    provider_city AS City,\\\n    provider_state AS State,\\\n    national_num_cases AS Total_cases_US,\\\n    cityrank AS City_Rank,\\\n    CAST(ROUND(citywise_avg_total_payments) AS LONG) AS Citywise_Avg_Payments,\\\n    CONCAT(CAST(ROUND(citywise_avg_total_payments /national_avg_total_payments * 100, 0) AS STRING), \" %\") AS Avg_Payments_City_vs_National\\\n    FROM query_s\\\n    ORDER BY Total_cases_US DESC\u0027\n\nsql23 \u003d \u0027SELECT\\\n    drg_definition AS Diagnosis,\\\n    provider_city AS City,\\\n    provider_state AS State,\\\n    national_num_cases AS Total_cases_US,\\\n    cityrank AS City_Rank,\\\n    CAST(ROUND(citywise_avg_total_payments) AS LONG) AS Citywise_Avg_Payments,\\\n    CONCAT(CAST(ROUND(citywise_avg_total_payments /national_avg_total_payments * 100, 0) AS STRING), \" %\") AS Avg_Payments_City_vs_National\\\n    FROM query_t\\\n    ORDER BY Total_cases_US DESC\u0027\n    \nsql24 \u003d \u0027SELECT\\\n    drg_definition AS Diagnosis,\\\n    provider_city AS City,\\\n    provider_state AS State,\\\n    national_num_cases AS Total_cases_US,\\\n    cityrank AS City_Rank,\\\n    CAST(ROUND(citywise_avg_total_payments) AS LONG) AS Citywise_Avg_Payments,\\\n    CONCAT(CAST(ROUND(citywise_avg_total_payments /national_avg_total_payments * 100, 0) AS STRING), \" %\") AS Avg_Payments_City_vs_National\\\n    FROM query_u\\\n    ORDER BY Total_cases_US DESC\u0027\n    \n    \nquery_All \u003d sqlContext.sql(sql19)\nquery_2011 \u003d sqlContext.sql(sql20)\nquery_2012 \u003d sqlContext.sql(sql21)\nquery_2013 \u003d sqlContext.sql(sql22)\nquery_2014 \u003d sqlContext.sql(sql23)\nquery_2015 \u003d sqlContext.sql(sql24)\n",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:45:28 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525951200176_149666594",
+      "id": "20180510-072000_1347276456",
+      "dateCreated": "May 10, 2018 7:20:00 AM",
+      "dateStarted": "May 10, 2018 7:45:28 AM",
+      "dateFinished": "May 10, 2018 7:45:28 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nfrom pyspark.sql.functions import lit\nquery_All \u003d query_All.withColumn(\"Year\",lit(\u00271115\u0027))\nquery_2011 \u003d query_2011.withColumn(\"Year\",lit(\u00272011\u0027))\nquery_2012 \u003d query_2012.withColumn(\"Year\",lit(\u00272012\u0027))\nquery_2013 \u003d query_2013.withColumn(\"Year\",lit(\u00272013\u0027))\nquery_2014 \u003d query_2014.withColumn(\"Year\",lit(\u00272014\u0027))\nquery_2015 \u003d query_2015.withColumn(\"Year\",lit(\u00272015\u0027))",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:45:32 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525951310150_-254568227",
+      "id": "20180510-072150_877183562",
+      "dateCreated": "May 10, 2018 7:21:50 AM",
+      "dateStarted": "May 10, 2018 7:45:32 AM",
+      "dateFinished": "May 10, 2018 7:45:32 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nfrom functools import reduce\nfrom pyspark.sql import DataFrame\n\ndef unionAll(*dfs):\n    return reduce(DataFrame.unionAll, dfs)\n\nfinal \u003d unionAll(query_All, query_2011, query_2012, query_2013, query_2014, query_2015)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:45:38 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525951328137_1511844622",
+      "id": "20180510-072208_188447492",
+      "dateCreated": "May 10, 2018 7:22:08 AM",
+      "dateStarted": "May 10, 2018 7:45:38 AM",
+      "dateFinished": "May 10, 2018 7:45:38 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nfinal.show()",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 7:45:41 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+-----------+-----+--------------+---------+---------------------+-----------------------------+----+\n|           Diagnosis|       City|State|Total_cases_US|City_Rank|Citywise_Avg_Payments|Avg_Payments_City_vs_National|Year|\n+--------------------+-----------+-----+--------------+---------+---------------------+-----------------------------+----+\n|470 - MAJOR JOINT...|   NEW YORK|   NY|     2224929.0|        1|                20932|                      142.0 %|1115|\n|470 - MAJOR JOINT...|     BOSTON|   MA|     2224929.0|        2|                17973|                      122.0 %|1115|\n|470 - MAJOR JOINT...|  BALTIMORE|   MD|     2224929.0|        3|                22527|                      153.0 %|1115|\n|871 - SEPTICEMIA ...|    CHICAGO|   IL|     2020821.0|        1|                16053|                      117.0 %|1115|\n|871 - SEPTICEMIA ...|    HOUSTON|   TX|     2020821.0|        2|                14104|                      103.0 %|1115|\n|871 - SEPTICEMIA ...|LOS ANGELES|   CA|     2020821.0|        3|                20177|                      147.0 %|1115|\n|392 - ESOPHAGITIS...|    CHICAGO|   IL|     1030241.0|        1|                 7252|                      132.0 %|1115|\n|392 - ESOPHAGITIS...|    ORLANDO|   FL|     1030241.0|        2|                 5363|                       98.0 %|1115|\n|392 - ESOPHAGITIS...|   NEW YORK|   NY|     1030241.0|        3|                 8927|                      163.0 %|1115|\n|292 - HEART FAILU...|    CHICAGO|   IL|     1008318.0|        1|                 9490|                      131.0 %|1115|\n|292 - HEART FAILU...|  BALTIMORE|   MD|     1008318.0|        2|                10572|                      145.0 %|1115|\n|292 - HEART FAILU...|    HOUSTON|   TX|     1008318.0|        3|                 8165|                      112.0 %|1115|\n|291 - HEART FAILU...|    CHICAGO|   IL|      980627.0|        1|                13169|                      123.0 %|1115|\n|291 - HEART FAILU...|    HOUSTON|   TX|      980627.0|        2|                11742|                      110.0 %|1115|\n|291 - HEART FAILU...|  BALTIMORE|   MD|      980627.0|        3|                15943|                      149.0 %|1115|\n|690 - KIDNEY \u0026 UR...|    CHICAGO|   IL|      885815.0|        1|                 7271|                      129.0 %|1115|\n|690 - KIDNEY \u0026 UR...|   NEW YORK|   NY|      885815.0|        2|                 9608|                      170.0 %|1115|\n|690 - KIDNEY \u0026 UR...|    HOUSTON|   TX|      885815.0|        3|                 6154|                      109.0 %|1115|\n|194 - SIMPLE PNEU...|  BALTIMORE|   MD|      857352.0|        1|                10112|                      143.0 %|1115|\n|194 - SIMPLE PNEU...|   NEW YORK|   NY|      857352.0|        2|                11943|                      169.0 %|1115|\n+--------------------+-----------+-----+--------------+---------+---------------------+-----------------------------+----+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525951376521_-1230768131",
+      "id": "20180510-072256_457152838",
+      "dateCreated": "May 10, 2018 7:22:56 AM",
+      "dateStarted": "May 10, 2018 7:45:41 AM",
+      "dateFinished": "May 10, 2018 7:46:59 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nfinal.repartition(1).write.csv(\"hdfs://dumbo/user/mm9817/Medicare/analysis/query_All\", sep\u003d\u0027,\u0027, header\u003d\"True\")",
+      "user": "anonymous",
+      "dateUpdated": "May 18, 2019 12:26:56 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": [],
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1525951332662_-1889720404",
+      "id": "20180510-072212_961730342",
+      "dateCreated": "May 10, 2018 7:22:12 AM",
+      "dateStarted": "May 18, 2019 12:24:26 AM",
+      "dateFinished": "May 18, 2019 12:24:26 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Inpatient_outpatient_final",
+  "id": "2DDGH8YG9",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "2DF28HTQJ:shared_process": [],
+    "2DCJYGBVN:shared_process": [],
+    "2DD5GZ2XY:shared_process": [],
+    "2DCUYB3NF:shared_process": [],
+    "2DCVFPKW7:shared_process": [],
+    "2DDRMB99J:shared_process": [],
+    "2DEC6FR24:shared_process": [],
+    "2DC7WQRHQ:shared_process": [],
+    "2DFA63CF2:shared_process": [],
+    "2DECE7GRY:shared_process": [],
+    "2DE4S984C:shared_process": [],
+    "2DBR3T6SP:shared_process": [],
+    "2DDBEJ6Z6:shared_process": [],
+    "2DCFA59K6:shared_process": [],
+    "2DE4NG36V:shared_process": [],
+    "2DDG5PHMG:shared_process": [],
+    "2DE6J6E7G:shared_process": [],
+    "2DDFDXEHN:shared_process": [],
+    "2DE1MN1V9:shared_process": []
+  },
+  "config": {
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {}
+}

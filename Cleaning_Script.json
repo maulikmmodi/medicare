@@ -1,0 +1,948 @@
+{
+  "paragraphs": [
+    {
+      "title": "",
+      "text": "%pyspark\nimport pyspark\nimport pandas as pd\nprint(\"%html \u003cH1\u003eAggregation \u0026 Cleaning of Dataset\u003c/H1\u003e\")",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 6:40:28 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cH1\u003eAggregation \u0026 Cleaning of Dataset\u003c/H1\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525024448656_-286393302",
+      "id": "20180429-135408_91519226",
+      "dateCreated": "Apr 29, 2018 1:54:08 PM",
+      "dateStarted": "May 10, 2018 5:26:07 AM",
+      "dateFinished": "May 10, 2018 5:26:07 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nprint(\"%html \u003cH4\u003eFunction to remove nulls and empty string\u003c/H1\u003e\")",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 5:29:12 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cH4\u003eFunction to remove nulls and empty string\u003c/H1\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525944503789_-1347753625",
+      "id": "20180510-052823_2070759117",
+      "dateCreated": "May 10, 2018 5:28:23 AM",
+      "dateStarted": "May 10, 2018 5:29:06 AM",
+      "dateFinished": "May 10, 2018 5:29:06 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nfrom functools import reduce\nfrom pyspark.sql import DataFrame\n\ndef unionAll(*dfs):\n    return reduce(DataFrame.unionAll, dfs)\n\ndef dropNulls(df):\n    count\u003d df.where(df[\u0027DRG Definition\u0027].isNull() | df[\u0027Provider City\u0027].isNull() | df[\u0027Provider State\u0027].isNull()\\\n| df[\u0027Total Discharges\u0027].isNull() | df[\u0027Average Total Payments\u0027].isNull() ).count()\n    print(\u0027Count of rows containing null values \u003d \u0027,count)\n    countna \u003d df.where((df[\u0027DRG Definition\u0027] \u003d\u003d \u0027\u0027) | (df[\u0027Provider City\u0027] \u003d\u003d \u0027\u0027) | (df[\u0027Provider State\u0027] \u003d\u003d \u0027\u0027)\\\n| (df[\u0027Total Discharges\u0027] \u003d\u003d \u0027\u0027) | (df[\u0027Average Total Payments\u0027] \u003d\u003d \u0027\u0027) ).count()\n    print(\u0027Count of rows containing empty strings \u003d \u0027,countna)\n    df \u003d df.filter(df[\u0027DRG Definition\u0027].isNotNull() | df[\u0027Provider City\u0027].isNotNull() | df[\u0027Provider State\u0027].isNotNull()\\\n| df[\u0027Total Discharges\u0027].isNotNull() | df[\u0027Average Total Payments\u0027].isNotNull())\n    df \u003d df.filter((df[\u0027DRG Definition\u0027] !\u003d \u0027\u0027) | (df[\u0027Provider City\u0027] !\u003d \u0027\u0027) | (df[\u0027Provider State\u0027] !\u003d \u0027\u0027)\\\n| (df[\u0027Total Discharges\u0027] !\u003d \u0027\u0027) | (df[\u0027Average Total Payments\u0027] !\u003d \u0027\u0027))\n    return df",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 5:27:50 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525944373505_215141856",
+      "id": "20180510-052613_218733339",
+      "dateCreated": "May 10, 2018 5:26:13 AM",
+      "dateStarted": "May 10, 2018 5:27:50 AM",
+      "dateFinished": "May 10, 2018 5:27:50 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nprint(\"%html \u003cH3\u003eInpatients Data\u003c/H3\u003e\")",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 5:30:53 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cH3\u003eInpatients Data\u003c/H3\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525944566254_1999485185",
+      "id": "20180510-052926_2061996427",
+      "dateCreated": "May 10, 2018 5:29:26 AM",
+      "dateStarted": "May 10, 2018 5:30:04 AM",
+      "dateFinished": "May 10, 2018 5:30:04 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\ninPatient_2011 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Provider_Charge_Inpatient_DRG100_FY2011.csv\",header\u003dTrue)\ninPatient_2012 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Provider_Charge_Inpatient_DRG100_FY2012.csv\",header\u003dTrue)\ninPatient_2013 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Provider_Charge_Inpatient_DRG100_FY2013.csv\",header\u003dTrue)\ninPatient_2014 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Provider_Charge_Inpatient_DRGALL_FY2014.csv\",header\u003dTrue)\ninPatient_2015 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Provider_Charge_Inpatient_DRGALL_FY2015.csv\",header\u003dTrue)",
+      "user": "anonymous",
+      "dateUpdated": "May 18, 2019 12:31:43 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": [],
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525024510677_-632005083",
+      "id": "20180429-135510_1325889839",
+      "dateCreated": "Apr 29, 2018 1:55:10 PM",
+      "dateStarted": "May 6, 2018 9:59:04 PM",
+      "dateFinished": "May 6, 2018 9:59:09 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\ninPatient_2011.printSchema()\ninPatient_2012.printSchema()\ninPatient_2013.printSchema()\ninPatient_2014.printSchema()\ninPatient_2015.printSchema()",
+      "user": "anonymous",
+      "dateUpdated": "May 6, 2018 9:59:13 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- DRG Definition: string (nullable \u003d true)\n |-- Provider Id: string (nullable \u003d true)\n |-- Provider Name: string (nullable \u003d true)\n |-- Provider Street Address: string (nullable \u003d true)\n |-- Provider City: string (nullable \u003d true)\n |-- Provider State: string (nullable \u003d true)\n |-- Provider Zip Code: string (nullable \u003d true)\n |-- Hospital Referral Region (HRR) Description: string (nullable \u003d true)\n |-- Total Discharges: string (nullable \u003d true)\n |-- Average Covered Charges: string (nullable \u003d true)\n |-- Average Total Payments: string (nullable \u003d true)\n |-- Average Medicare Payments: string (nullable \u003d true)\n\nroot\n |-- DRG Definition: string (nullable \u003d true)\n |-- Provider Id: string (nullable \u003d true)\n |-- Provider Name: string (nullable \u003d true)\n |-- Provider Street Address: string (nullable \u003d true)\n |-- Provider City: string (nullable \u003d true)\n |-- Provider State: string (nullable \u003d true)\n |-- Provider Zip Code: string (nullable \u003d true)\n |-- Hospital Referral Region (HRR) Description: string (nullable \u003d true)\n |-- Total Discharges: string (nullable \u003d true)\n |-- Average Covered Charges: string (nullable \u003d true)\n |-- Average Total Payments: string (nullable \u003d true)\n |-- Average Medicare Payments: string (nullable \u003d true)\n\nroot\n |-- DRG Definition: string (nullable \u003d true)\n |-- Provider Id: string (nullable \u003d true)\n |-- Provider Name: string (nullable \u003d true)\n |-- Provider Street Address: string (nullable \u003d true)\n |-- Provider City: string (nullable \u003d true)\n |-- Provider State: string (nullable \u003d true)\n |-- Provider Zip Code: string (nullable \u003d true)\n |-- Hospital Referral Region (HRR) Description: string (nullable \u003d true)\n |-- Total Discharges: string (nullable \u003d true)\n |-- Average Covered Charges: string (nullable \u003d true)\n |-- Average Total Payments: string (nullable \u003d true)\n |-- Average Medicare Payments: string (nullable \u003d true)\n\nroot\n |-- DRG Definition: string (nullable \u003d true)\n |-- Provider Id: string (nullable \u003d true)\n |-- Provider Name: string (nullable \u003d true)\n |-- Provider Street Address: string (nullable \u003d true)\n |-- Provider City: string (nullable \u003d true)\n |-- Provider State: string (nullable \u003d true)\n |-- Provider Zip Code: string (nullable \u003d true)\n |-- Hospital Referral Region (HRR) Description: string (nullable \u003d true)\n |-- Total Discharges: string (nullable \u003d true)\n |-- Average Covered Charges: string (nullable \u003d true)\n |-- Average Total Payments: string (nullable \u003d true)\n |-- Average Medicare Payments: string (nullable \u003d true)\n\nroot\n |-- DRG Definition: string (nullable \u003d true)\n |-- Provider Id: string (nullable \u003d true)\n |-- Provider Name: string (nullable \u003d true)\n |-- Provider Street Address: string (nullable \u003d true)\n |-- Provider City: string (nullable \u003d true)\n |-- Provider State: string (nullable \u003d true)\n |-- Provider Zip Code: string (nullable \u003d true)\n |-- Hospital Referral Region (HRR) Description: string (nullable \u003d true)\n |-- Total Discharges: string (nullable \u003d true)\n |-- Average Covered Charges: string (nullable \u003d true)\n |-- Average Total Payments: string (nullable \u003d true)\n |-- Average Medicare Payments: string (nullable \u003d true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525024811625_-2144039257",
+      "id": "20180429-140011_1623744137",
+      "dateCreated": "Apr 29, 2018 2:00:11 PM",
+      "dateStarted": "May 6, 2018 9:59:13 PM",
+      "dateFinished": "May 6, 2018 9:59:13 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nfrom pyspark.sql.functions import lit\ninPatient_2011 \u003d inPatient_2011.withColumn(\"Year\", lit(\u00272011\u0027))\ninPatient_2012 \u003d inPatient_2012.withColumn(\"Year\", lit(\u00272012\u0027))\ninPatient_2013 \u003d inPatient_2013.withColumn(\"Year\", lit(\u00272013\u0027))\ninPatient_2014 \u003d inPatient_2014.withColumn(\"Year\", lit(\u00272014\u0027))\ninPatient_2015 \u003d inPatient_2015.withColumn(\"Year\", lit(\u00272015\u0027))",
+      "user": "anonymous",
+      "dateUpdated": "May 6, 2018 9:59:18 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525026214147_-897862761",
+      "id": "20180429-142334_2054029020",
+      "dateCreated": "Apr 29, 2018 2:23:34 PM",
+      "dateStarted": "May 6, 2018 9:59:18 PM",
+      "dateFinished": "May 6, 2018 9:59:18 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\ninPatient_2011 \u003d dropNulls(inPatient_2011)\ninPatient_2012 \u003d dropNulls(inPatient_2012)\ninPatient_2013 \u003d dropNulls(inPatient_2013)\ninPatient_2014 \u003d dropNulls(inPatient_2014)\ninPatient_2015 \u003d dropNulls(inPatient_2015)",
+      "user": "anonymous",
+      "dateUpdated": "May 6, 2018 10:14:19 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Count of rows containing null values \u003d  0\nCount of rows containing empty strings \u003d  0\nCount of rows containing null values \u003d  0\nCount of rows containing empty strings \u003d  0\nCount of rows containing null values \u003d  4147\nCount of rows containing empty strings \u003d  0\nCount of rows containing null values \u003d  0\nCount of rows containing empty strings \u003d  0\nCount of rows containing null values \u003d  0\nCount of rows containing empty strings \u003d  0\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525658363706_-717015667",
+      "id": "20180506-215923_1720086297",
+      "dateCreated": "May 6, 2018 9:59:23 PM",
+      "dateStarted": "May 6, 2018 10:14:19 PM",
+      "dateFinished": "May 6, 2018 10:14:31 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\ninPatient_All \u003d unionAll(inPatient_2011, inPatient_2012, inPatient_2013, inPatient_2014, inPatient_2015)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 5:30:42 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525027597251_661144716",
+      "id": "20180429-144637_614100674",
+      "dateCreated": "Apr 29, 2018 2:46:37 PM",
+      "dateStarted": "May 6, 2018 10:14:53 PM",
+      "dateFinished": "May 6, 2018 10:14:53 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\ninPatient_All.repartition(1).write.csv(\"hdfs://dumbo/user/mm9817/Medicare/Inpatient_combined/inPatientAll.csv\", sep\u003d\u0027,\u0027, header\u003d\"True\")",
+      "user": "anonymous",
+      "dateUpdated": "May 18, 2019 12:31:51 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": [],
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525027654508_-1103421009",
+      "id": "20180429-144734_1778134715",
+      "dateCreated": "Apr 29, 2018 2:47:34 PM",
+      "dateStarted": "May 6, 2018 10:15:54 PM",
+      "dateFinished": "May 6, 2018 10:16:08 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nprint(\"%html \u003cH3\u003eOutPatients Data\u003c/H3\u003e\")",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 6:54:42 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cH3\u003eOutPatients Data\u003c/H3\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525944642244_-1200178614",
+      "id": "20180510-053042_1393851037",
+      "dateCreated": "May 10, 2018 5:30:42 AM",
+      "dateStarted": "May 10, 2018 5:31:47 AM",
+      "dateFinished": "May 10, 2018 5:31:47 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\noutPatient_2011 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Provider_Charge_Outpatient_APC30_CY2011_v2.csv\",header\u003dTrue)\noutPatient_2012 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Provider_Charge_Outpatient_APC30_CY2012.csv\",header\u003dTrue)\noutPatient_2013 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Provider_Charge_Outpatient_APC30_CY2013_v2.csv\",header\u003dTrue)\noutPatient_2014 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Provider_Charge_Outpatient_APC32_CY2014.csv\",header\u003dTrue)\noutPatient_2015 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Charge_Outpatient_APC28_CY2015_Provider.csv\",header\u003dTrue)",
+      "user": "anonymous",
+      "dateUpdated": "May 18, 2019 12:32:09 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": [],
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1525944721070_724209502",
+      "id": "20180510-053201_854165501",
+      "dateCreated": "May 10, 2018 5:32:01 AM",
+      "dateStarted": "May 18, 2019 12:31:11 AM",
+      "dateFinished": "May 18, 2019 12:31:11 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nfrom pyspark.sql.functions import lit\noutPatient_2011 \u003d outPatient_2011.withColumn(\"Year\", lit(\u00272011\u0027))\noutPatient_2012 \u003d outPatient_2012.withColumn(\"Year\", lit(\u00272012\u0027))\noutPatient_2013 \u003d outPatient_2013.withColumn(\"Year\", lit(\u00272013\u0027))\noutPatient_2014 \u003d outPatient_2014.withColumn(\"Year\", lit(\u00272014\u0027))\noutPatient_2015 \u003d outPatient_2015.withColumn(\"Year\", lit(\u00272015\u0027))",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 5:32:21 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1525944728391_-1994041477",
+      "id": "20180510-053208_70364665",
+      "dateCreated": "May 10, 2018 5:32:08 AM",
+      "dateStarted": "May 18, 2019 12:31:11 AM",
+      "dateFinished": "May 18, 2019 12:31:11 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\noutPatient_2011 \u003d dropNulls(outPatient_2011)\noutPatient_2012 \u003d dropNulls(outPatient_2012)\noutPatient_2013 \u003d dropNulls(outPatient_2013)\noutPatient_2014 \u003d dropNulls(outPatient_2014)\noutPatient_2015 \u003d dropNulls(outPatient_2015)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 5:33:16 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1525944742001_-402689378",
+      "id": "20180510-053222_1498887755",
+      "dateCreated": "May 10, 2018 5:32:22 AM",
+      "dateStarted": "May 18, 2019 12:31:11 AM",
+      "dateFinished": "May 18, 2019 12:31:11 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nOutPatient_All \u003d unionAll(outPatient_2011, outPatient_2012, outPatient_2013, outPatient_2014, outPatient_2015)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 5:34:12 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1525944844408_2069507840",
+      "id": "20180510-053404_1742683665",
+      "dateCreated": "May 10, 2018 5:34:04 AM",
+      "dateStarted": "May 18, 2019 12:31:11 AM",
+      "dateFinished": "May 18, 2019 12:31:11 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nOutPatient_All.repartition(1).write.csv(\"hdfs://dumbo/user/mm9817/Medicare/Outpatient_combined\", sep\u003d\u0027,\u0027, header\u003d\"True\")",
+      "user": "anonymous",
+      "dateUpdated": "May 18, 2019 12:32:16 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": [],
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1525944852995_-1245103935",
+      "id": "20180510-053412_1295324019",
+      "dateCreated": "May 10, 2018 5:34:12 AM",
+      "dateStarted": "May 18, 2019 12:31:11 AM",
+      "dateFinished": "May 18, 2019 12:31:11 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nprint(\"%html \u003cH3\u003ePart D Prescriber Data\u003c/H3\u003e\")",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 6:54:29 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cH3\u003ePart D Prescriber Data\u003c/H3\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525944870641_664820254",
+      "id": "20180510-053430_196579283",
+      "dateCreated": "May 10, 2018 5:34:30 AM",
+      "dateStarted": "May 10, 2018 5:35:31 AM",
+      "dateFinished": "May 10, 2018 5:35:31 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nfrom pyspark.sql.functions import lit\n\nPart_D_2013 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Project/Data/Part D_Prescriber/PartD_Prescriber_PUF_NPI_Drug_13.txt\",sep \u003d \"\\t\",header \u003d \"True\")\nPart_D_2013 \u003d Part_D_2013.withColumn(\"Year\", lit(\u00272013\u0027))\nPart_D_2014 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Project/Data/Part D_Prescriber/PartD_Prescriber_PUF_NPI_Drug_14.txt\",sep \u003d \"\\t\",header \u003d \"True\")\nPart_D_2014 \u003d Part_D_2014.withColumn(\"Year\", lit(\u00272014\u0027))\nPart_D_2015 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Project/Data/Part D_Prescriber/PartD_Prescriber_PUF_NPI_Drug_15.txt\",sep \u003d \"\\t\",header \u003d \"True\")\nPart_D_2015 \u003d Part_D_2015.withColumn(\"Year\", lit(\u00272015\u0027))\n\nPart_D_All \u003d unionAll(Part_D_2013, Part_D_2014,Part_D_2015)\nPart_D_All.registerTempTable(\"Part_D_All\")",
+      "user": "anonymous",
+      "dateUpdated": "May 18, 2019 12:32:25 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": [],
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525944902957_92560722",
+      "id": "20180510-053502_1714875853",
+      "dateCreated": "May 10, 2018 5:35:02 AM",
+      "dateStarted": "May 10, 2018 6:54:11 AM",
+      "dateFinished": "May 10, 2018 6:54:12 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nPart_D_All.repartition(1).write.csv(\"hdfs://dumbo/user/mm9817/Project/Data/Part D_Prescriber/Part_D_All\", sep\u003d\u0027,\u0027, header\u003d\"True\")",
+      "user": "anonymous",
+      "dateUpdated": "May 18, 2019 12:32:28 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": [],
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1525949544850_-1804263988",
+      "id": "20180510-065224_1350652866",
+      "dateCreated": "May 10, 2018 6:52:24 AM",
+      "dateStarted": "May 18, 2019 12:31:11 AM",
+      "dateFinished": "May 18, 2019 12:31:11 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nprint(\"%html \u003cH3\u003eSkilled Nursing facility\u003c/H3\u003e\")",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 6:54:31 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cH3\u003eSkilled Nursing facility\u003c/H3\u003e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525944939412_-2080855166",
+      "id": "20180510-053539_621173584",
+      "dateCreated": "May 10, 2018 5:35:39 AM",
+      "dateStarted": "May 10, 2018 5:36:05 AM",
+      "dateFinished": "May 10, 2018 5:36:05 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nNursing_2014 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Skilled_Nursing_Facility__SNF__Provider_Aggregate_Report__CY_2014.csv\",header \u003d \"True\")\nNursing_2015 \u003d spark.read.csv(\"hdfs://dumbo/user/mm9817/Medicare/Medicare_Skilled_Nursing_Facility__SNF__Provider_Aggregate_Report__CY_2015.csv\",header \u003d \"True\")\nNursing_All \u003d unionAll(Nursing_2014, Nursing_2015)\nNursing_All.registerTempTable(\"Nursing_All\")",
+      "user": "anonymous",
+      "dateUpdated": "May 18, 2019 12:32:37 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": [],
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525945345417_-1431417636",
+      "id": "20180510-054225_113150226",
+      "dateCreated": "May 10, 2018 5:42:25 AM",
+      "dateStarted": "May 10, 2018 5:58:53 AM",
+      "dateFinished": "May 10, 2018 5:59:00 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nNursing_All \u003d spark.sql(\"SELECT `Provider ID` as provider_id, `Facility Name` as facility_name, City, State, `Total Stays`, `Distinct Beneficiaries Per Provider`,`Average Length of Stay (Days)`, `Total SNF Charge Amount`,`Total SNF Medicare Allowed Amount`,`Total SNF Medicare Payment Amount`,`Total SNF Medicare Standard Payment Amount`,`Average Age`,`Male Beneficiaries`,`Female Beneficiaries`, `Nondual Beneficiaries`,`Dual Beneficiaries`,`White Beneficiaries`,`Black Beneficiaries`,`Average HCC Score`, `Percent of Beneficiaries with Atrial Fibrillation`, `Percent of Beneficiaries with Asthma`,`Percent of Beneficiaries with Cancer`,`Percent of Beneficiaries with CHF`,`Percent of Beneficiaries with Chronic Kidney Disease`,`Percent of Beneficiaries with COPD`,`Percent of Beneficiaries with Depression`,`Percent of Beneficiaries with Diabetes`,`Percent of Beneficiaries with Hyperlipidemia`,`Percent of Beneficiaries with IHD`,`Percent of Beneficiaries with Osteoporosis`,`Percent of Beneficiaries with RA/OA`,`Percent of Beneficiaries with Schizophrenia`,`Percent of Beneficiaries with Stroke` FROM `Nursing_All`\")\n",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 5:59:06 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525945391982_-1831510520",
+      "id": "20180510-054311_1910300788",
+      "dateCreated": "May 10, 2018 5:43:11 AM",
+      "dateStarted": "May 10, 2018 5:59:06 AM",
+      "dateFinished": "May 10, 2018 5:59:06 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nNursing \u003d Nursing_All\nNursing \u003d Nursing.withColumn(\u0027index\u0027,Nursing.provider_id)\nNursing \u003d Nursing.drop(\u0027provider_id\u0027,\u0027facility_name\u0027, \u0027City\u0027, \u0027State\u0027)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 5:59:22 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525945434366_1707317918",
+      "id": "20180510-054354_174332417",
+      "dateCreated": "May 10, 2018 5:43:54 AM",
+      "dateStarted": "May 10, 2018 5:59:22 AM",
+      "dateFinished": "May 10, 2018 5:59:22 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nfrom pyspark.sql.functions import regexp_replace, col\nfrom pyspark.sql.types import DoubleType\n\nfor B in [\u0027Percent of Beneficiaries with Atrial Fibrillation\u0027, \u0027Percent of Beneficiaries with Asthma\u0027, \u0027Percent of Beneficiaries with Cancer\u0027, \u0027Percent of Beneficiaries with CHF\u0027, \u0027Percent of Beneficiaries with Chronic Kidney Disease\u0027, \u0027Percent of Beneficiaries with COPD\u0027, \u0027Percent of Beneficiaries with Depression\u0027, \u0027Percent of Beneficiaries with Diabetes\u0027, \u0027Percent of Beneficiaries with Hyperlipidemia\u0027, \u0027Percent of Beneficiaries with IHD\u0027, \u0027Percent of Beneficiaries with Osteoporosis\u0027, \u0027Percent of Beneficiaries with RA/OA\u0027, \u0027Percent of Beneficiaries with Schizophrenia\u0027, \u0027Percent of Beneficiaries with Stroke\u0027]:\n    Nursing \u003d Nursing.withColumn(B,regexp_replace(col(B), \"%\", \"\").cast(DoubleType()))\nfor B in [\u0027Total SNF Charge Amount\u0027, \u0027Total SNF Medicare Allowed Amount\u0027, \u0027Total SNF Medicare Payment Amount\u0027, \u0027Total SNF Medicare Standard Payment Amount\u0027]:    \n    Nursing \u003d Nursing.withColumn(B,regexp_replace(col(B), \"\\\\$\", \"\").cast(DoubleType()))\n    \nfor B in Nursing.schema.names:  \n    Nursing \u003d Nursing.withColumn(B,regexp_replace(col(B), \"\\\\*\", \"\").cast(DoubleType()))\n    \n    \nNursing \u003d Nursing.fillna(0)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 6:11:14 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525945446062_-1229085687",
+      "id": "20180510-054406_888502053",
+      "dateCreated": "May 10, 2018 5:44:06 AM",
+      "dateStarted": "May 10, 2018 6:11:14 AM",
+      "dateFinished": "May 10, 2018 6:11:15 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nNursing.repartition(1).write.csv(\"hdfs://dumbo/user/mm9817/Medicare/Skilled_Nursing_facility\", sep\u003d\u0027,\u0027, header\u003d\"True\")",
+      "user": "anonymous",
+      "dateUpdated": "May 18, 2019 12:32:45 AM",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": [],
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525945754785_1424166274",
+      "id": "20180510-054914_709346090",
+      "dateCreated": "May 10, 2018 5:49:14 AM",
+      "dateStarted": "May 10, 2018 6:12:38 AM",
+      "dateFinished": "May 10, 2018 6:12:50 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "%pyspark\n",
+      "user": "anonymous",
+      "dateUpdated": "Apr 29, 2018 8:03:26 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "python"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1525046606088_1696896004",
+      "id": "20180429-200326_573609463",
+      "dateCreated": "Apr 29, 2018 8:03:26 PM",
+      "dateStarted": "May 18, 2019 12:31:11 AM",
+      "dateFinished": "May 18, 2019 12:31:11 AM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Cleaning_Script",
+  "id": "2DD4U94YM",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "2DF28HTQJ:shared_process": [],
+    "2DCJYGBVN:shared_process": [],
+    "2DD5GZ2XY:shared_process": [],
+    "2DCUYB3NF:shared_process": [],
+    "2DCVFPKW7:shared_process": [],
+    "2DDRMB99J:shared_process": [],
+    "2DEC6FR24:shared_process": [],
+    "2DC7WQRHQ:shared_process": [],
+    "2DFA63CF2:shared_process": [],
+    "2DECE7GRY:shared_process": [],
+    "2DE4S984C:shared_process": [],
+    "2DBR3T6SP:shared_process": [],
+    "2DDBEJ6Z6:shared_process": [],
+    "2DCFA59K6:shared_process": [],
+    "2DE4NG36V:shared_process": [],
+    "2DDG5PHMG:shared_process": [],
+    "2DE6J6E7G:shared_process": [],
+    "2DDFDXEHN:shared_process": [],
+    "2DE1MN1V9:shared_process": []
+  },
+  "config": {
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {}
+}
