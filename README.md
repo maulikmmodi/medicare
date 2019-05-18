@@ -17,12 +17,12 @@ Few Outcomes:
 
 Viz for point 3 above
 
-![Nursing Facilities Distribution](https://github.com/ayush159/Medicare/blob/master/nursing_facilities.png)
+![Nursing Facilities Distribution](https://github.com/maulikmmodi/medicare/blob/master/nursing_facilities.png)
 
 
 Viz for point 5th
-![Diagnosis/city VS Cost](https://github.com/ayush159/Medicare/blob/master/plot4.png)
+![Diagnosis/city VS Cost](https://github.com/maulikmmodi/medicare/blob/master/plot4.png)
 
 
 HCC Scores for different States
-![MAX-Min HCC Scores](https://github.com/ayush159/Medicare/blob/master/hcc_Scores.png)
+![MAX-Min HCC Scores](https://github.com/maulikmmodi/medicare/blob/master/hcc_Scores.png)
